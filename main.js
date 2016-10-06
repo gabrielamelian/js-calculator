@@ -34,9 +34,7 @@ function calculateResult() {
     } else {
         result = eval(equation);
     }
-    // console.log(result);
     updateDOM("result");
-    equation = "";
     equation = result;
 }
 
@@ -45,7 +43,6 @@ function clearResult() {
     equation = "";
     updateDOM("result");
     updateDOM("zero");
-    // console.log(result);
 }
 
 function clearLast() {
