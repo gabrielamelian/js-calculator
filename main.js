@@ -49,7 +49,6 @@ function clearLast() {
   var lastDigit = equation[equation.length - 1];
   if (lastDigit === "+" || lastDigit === "-" || lastDigit === "*" || lastDigit === "/") {
     equation = equation.slice(0, equation.length -1);
-    // updateDOM("equation");
   } else {
     var operators = /[\/\+\-\*]/g; // To match all arithmetic operators
     var tempArray = equation.split(operators);
