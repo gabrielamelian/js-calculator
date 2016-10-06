@@ -1,13 +1,7 @@
-// TO DO LIST
-// 1. Find workaround for JS rounding issue
-// 2. Print error message if equation input is totally nonsensical
-
-
 document.addEventListener('DOMContentLoaded', start);
 
 function start () {
     var buttons = document.getElementsByTagName("button");
-    // console.log(buttons);
     for (var i = 0; i < buttons.length; i++) {
         buttons[i].addEventListener("click", getButton);
     }
@@ -25,10 +19,9 @@ function getButton(evt) {
         calculateResult();
     } else {
         equation += evt.target.value;
-        console.log(equation);
-        document.getElementById("equation").innerHTML = "<p>" + equation + "</p>";
+        // console.log(equation);
+        updateDOM("equation");
     }
-    // console.log(evt.target.value);
 }
 
 function calculateResult() {
@@ -37,15 +30,13 @@ function calculateResult() {
     var alsoIllegal = /[\+\-][\*\/]/; // matches two characters; first is + or -, second is * or /
     if ( (illegalExpression.test(equation) && equation.match(illegalExpression) != "**") || alsoIllegal.test(equation) ) {
         result = "Illegal!!";
-    }
-    else if (twoPlusOrMinus.test(equation)) {
+    } else if (twoPlusOrMinus.test(equation)) {
         result = "Javascript don't like it";
-    }
-    else {
+    } else {
         result = eval(equation);
     }
-    console.log(result);
-    document.getElementById("result").innerHTML = "<p>" + result + "</p>";
+    // console.log(result);
+    updateDOM("result");
     equation = "";
     equation = result;
 }
@@ -53,21 +44,31 @@ function calculateResult() {
 function clearResult() {
     result = 0;
     equation = "";
-    document.getElementById("result").innerHTML = "<p>" + result + "</p>";
-    document.getElementById("equation").innerHTML = "<p>0</p>";
-    console.log(result);
+    updateDOM("result");
+    updateDOM("zero");
+    // console.log(result);
 }
 
 function clearLast() {
   var lastDigit = equation[equation.length - 1];
   if (lastDigit === "+" || lastDigit === "-" || lastDigit === "*" || lastDigit === "/") {
     equation = equation.slice(0, equation.length -1);
-    document.getElementById("equation").innerHTML = "<p>" + equation + "</p>";
+    updateDOM("equation");
   } else {
     var operators = /[\/\+\-\*]/g; // To match all arithmetic operators
     var tempArray = equation.split(operators);
     var lastElementLength = tempArray[tempArray.length -1].length;
     equation = equation.slice(0, equation.length - lastElementLength);
   }
-  document.getElementById("equation").innerHTML = "<p>" + equation + "</p>";
+  updateDOM("equation");
+}
+
+function updateDOM(target) {
+    if (target === "equation") {
+        document.getElementById("equation").innerHTML = "<p>" + equation + "</p>";
+    } else if (target === "result") {
+        document.getElementById("result").innerHTML = "<p>" + result + "</p>";
+    } else if (target === "zero") {
+        document.getElementById("equation").innerHTML = "<p>0</p>";
+    }
 }
