@@ -1,14 +1,14 @@
 document.addEventListener('DOMContentLoaded', start);
 
+var equation = "";
+var result = 0;
+
 function start () {
     var buttons = document.getElementsByTagName("button");
     for (var i = 0; i < buttons.length; i++) {
         buttons[i].addEventListener("click", getButton);
     }
 }
-
-var equation = "";
-var result = 0;
 
 function getButton(evt) {
     if (evt.target.id === "AC") {
@@ -20,16 +20,6 @@ function getButton(evt) {
     } else {
         equation += evt.target.value;
         updateDOM("equation", equation);
-    }
-}
-
-function calculateResult() {
-    if (correctExpression() === false) {
-        updateDOM("result", "Malformed expression");
-    } else {
-        result = eval(equation);
-        updateDOM("result", result);
-        equation = result;
     }
 }
 
@@ -51,6 +41,16 @@ function clearLast() {
     equation = equation.slice(0, equation.length - lastElementLength);
   }
   checkLastDigit();
+}
+
+function calculateResult() {
+    if (correctExpression() === false) {
+        updateDOM("result", "Malformed expression");
+    } else {
+        result = eval(equation);
+        updateDOM("result", result);
+        equation = result;
+    }
 }
 
 function updateDOM(target, content) {
